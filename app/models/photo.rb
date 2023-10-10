@@ -28,46 +28,55 @@ class Photo < ApplicationRecord
   ## Indirect associations
 
   # Photo#fans: returns rows from the users table associated to this photo through its likes
+belongs_to(:poster, :class_name => "User", :foreign_key => "owner_id")
+has_many(:comments, :class_name => "Comment", :foreign_key => "photo_id")
 
-  def poster
-    my_owner_id = self.owner_id
+has_many(:likes, :class_name => "Like", :foreign_key => "photo_id")
 
-    matching_users = User.where({ :id => my_owner_id })
+ # def poster
+   # my_owner_id = self.owner_id
 
-    the_user = matching_users.at(0)
+    #matching_users = User.where({ :id => my_owner_id })
 
-    return the_user
-  end
+    #the_user = matching_users.at(0)
 
-  def comments
-    my_id = self.id
+    #return the_user
+ # end
 
-    matching_comments = Comment.where({ :photo_id => self.id })
+  #def comments
+    #my_id = self.id
 
-    return matching_comments
-  end
+    #matching_comments = Comment.where({ :photo_id => self.id })
 
-  def likes
-    my_id = self.id
+    #return matching_comments
+ # end
 
-    matching_likes = Like.where({ :photo_id => self.id })
+  #def likes
+    #my_id = self.id
 
-    return matching_likes
-  end
+    #matching_likes = Like.where({ :photo_id => self.id })
 
-  def fans
-    my_likes = self.likes
+    #return matching_likes
+  #end
+
+ # def fans
+   # my_likes = self.likes
     
-    array_of_user_ids = Array.new
+   # array_of_user_ids = Array.new
 
-    my_likes.each do |a_like|
-      array_of_user_ids.push(a_like.fan_id)
-    end
+   # my_likes.each do |a_like|
+      #array_of_user_ids.push(a_like.fan_id)
+    #end
 
-    matching_users = User.where({ :id => array_of_user_ids })
+    #matching_users = User.where({ :id => array_of_user_ids })
 
-    return matching_users
-  end
+    #return matching_users
+ # end
+
+
+  has_many(:fans, :through => "likes", :source => "User")
+
+  #has_many(:fan_list, :through => "likes", :source => "photo")
 
   def fan_list
     my_fans = self.fans
