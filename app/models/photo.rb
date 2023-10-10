@@ -74,21 +74,20 @@ has_many(:likes, :class_name => "Like", :foreign_key => "photo_id")
  # end
 
 
-  has_many(:fans, :through => "likes", :source => "User")
+  has_many(:fans, :through => "likes", :source => "fan")
 
-  #has_many(:fan_list, :through => "likes", :source => "photo")
 
-  def fan_list
-    my_fans = self.fans
+  #def fan_list
+    #my_fans = self.fans
 
-    array_of_usernames = Array.new
+    #array_of_usernames = Array.new
 
-    my_fans.each do |a_user|
-      array_of_usernames.push(a_user.username)
-    end
+   # my_fans.each do |a_user|
+     # array_of_usernames.push(a_user.username)
+   # end
 
-    formatted_usernames = array_of_usernames.to_sentence
+    #formatted_usernames = array_of_usernames.to_sentence
 
-    return formatted_usernames
-  end
+    #return formatted_usernames
+  #end
 end

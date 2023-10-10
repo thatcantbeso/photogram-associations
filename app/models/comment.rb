@@ -23,6 +23,8 @@ class Comment < ApplicationRecord
 
   belongs_to(:commenter, :class_name => "User", :foreign_key => "author_id")
 
+  belongs_to(:photo, :class_name => "Photo", :foreign_key => "photo_id")
+
  # def commenter
    # my_author_id = self.author_id
 
